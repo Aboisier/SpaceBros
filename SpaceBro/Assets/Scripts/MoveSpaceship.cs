@@ -19,6 +19,15 @@ public class MoveSpaceship : MonoBehaviour {
                       ((go.transform.position - transform.position).sqrMagnitude);
 
             GetComponent<Rigidbody2D>().AddForce((go.transform.position - transform.position).normalized * gravity);
+
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                GetComponent<Rigidbody2D>().AddForce(transform.up * 2);
+            }
+            if (Input.GetKey(KeyCode.LeftArrow))
+                GetComponent<Rigidbody2D>().AddTorque(0.5f);
+            if (Input.GetKey(KeyCode.RightArrow))
+                GetComponent<Rigidbody2D>().AddTorque(-0.5f);
         }
     }
 }
