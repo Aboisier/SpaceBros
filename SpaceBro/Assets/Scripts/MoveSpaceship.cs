@@ -4,7 +4,9 @@ using System.Collections;
 public class MoveSpaceship : MonoBehaviour {
 
     GameObject[] planets;
-    public float gravity;
+    float gravity;
+    public ParticleSystem ps;
+
 	// Use this for initialization
 	void Start () {
         planets = GameObject.FindGameObjectsWithTag("Planet");
@@ -23,7 +25,12 @@ public class MoveSpaceship : MonoBehaviour {
             if (Input.GetKey(KeyCode.UpArrow))
             {
                 GetComponent<Rigidbody2D>().AddForce(transform.up * 2);
+                ps.Play();
+
             }
+            if (Input.GetKeyUp(KeyCode.UpArrow))
+                ps.Stop();
+
             if (Input.GetKey(KeyCode.LeftArrow))
                 GetComponent<Rigidbody2D>().AddTorque(0.5f);
             if (Input.GetKey(KeyCode.RightArrow))
