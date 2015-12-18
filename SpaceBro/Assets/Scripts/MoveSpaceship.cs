@@ -10,6 +10,7 @@ public class MoveSpaceship : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         planets = GameObject.FindGameObjectsWithTag("Planet");
+        ps.Stop();
     }
 	
 	// Update is called once per frame
