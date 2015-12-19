@@ -1,0 +1,36 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:64ee95e68000a2f9289fb242e5685994:24cbbd0a7c71921c005a95e0a1debf9b:5be2667b3d846455e14ae28c2b728f01$
+#
+:format=40000
+:texture=run anim.png
+:size=1024x2048
+
+dynamic run0001;1;1608;168;439;0.5;0.5
+dynamic run0002;171;1608;168;439;0.5;0.5
+dynamic run0003;341;1608;168;439;0.5;0.5
+dynamic run0004;511;1608;168;439;0.5;0.5
+dynamic run0005;681;1608;168;439;0.5;0.5
+dynamic run0006;851;1608;168;439;0.5;0.5
+dynamic run0007;1;1167;168;439;0.5;0.5
+dynamic run0008;171;1167;168;439;0.5;0.5
+dynamic run0009;341;1167;168;439;0.5;0.5
+dynamic run0010;511;1167;168;439;0.5;0.5
+dynamic run0011;681;1167;168;439;0.5;0.5
+dynamic run0012;851;1167;168;439;0.5;0.5
+dynamic run0013;1;726;168;439;0.5;0.5
+dynamic run0014;171;726;168;439;0.5;0.5
+dynamic run0015;341;726;168;439;0.5;0.5
+dynamic run0016;511;726;168;439;0.5;0.5
+dynamic run0017;681;726;168;439;0.5;0.5
+dynamic run0018;851;726;168;439;0.5;0.5
+dynamic run0019;1;285;168;439;0.5;0.5
+dynamic run0020;171;285;168;439;0.5;0.5
+dynamic run0021;341;285;168;439;0.5;0.5
+dynamic run0022;511;285;168;439;0.5;0.5
+dynamic run0023;681;285;168;439;0.5;0.5
+dynamic run0024;851;285;168;439;0.5;0.5

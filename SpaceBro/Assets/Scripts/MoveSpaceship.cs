@@ -2,40 +2,35 @@
 using System.Collections;
 
 public class MoveSpaceship : MonoBehaviour {
-
-    GameObject[] planets;
-    float gravity;
-    public ParticleSystem ps;
+    public ParticleSystem Ps;
+    Rigidbody2D Rb;
+    float EnginePower = 4;
 
 	// Use this for initialization
 	void Start () {
-        planets = GameObject.FindGameObjectsWithTag("Planet");
-        ps.Stop();
+        Ps.Stop();
+        Rb = GetComponent<Rigidbody2D>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        foreach (GameObject go in planets)
+        HandleInput();
+    }
+
+    void HandleInput()
+    {
+        if (Input.GetKey(KeyCode.UpArrow))
         {
+            Rb.AddForce(transform.up * EnginePower);
+            Ps.Play();
 
-            gravity = (GetComponent<Rigidbody2D>().mass * go.GetComponent<Rigidbody2D>().mass) /
-                      ((go.transform.position - transform.position).sqrMagnitude);
-
-            GetComponent<Rigidbody2D>().AddForce((go.transform.position - transform.position).normalized * gravity);
-
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                GetComponent<Rigidbody2D>().AddForce(transform.up * 2);
-                ps.Play();
-
-            }
-            if (Input.GetKeyUp(KeyCode.UpArrow))
-                ps.Stop();
-
-            if (Input.GetKey(KeyCode.LeftArrow))
-                GetComponent<Rigidbody2D>().AddTorque(0.5f);
-            if (Input.GetKey(KeyCode.RightArrow))
-                GetComponent<Rigidbody2D>().AddTorque(-0.5f);
         }
+        if (Input.GetKeyUp(KeyCode.UpArrow))
+            Ps.Stop();
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+            Rb.AddTorque(EnginePower / 4);
+        if (Input.GetKey(KeyCode.RightArrow))
+            Rb.AddTorque(-EnginePower / 4);
     }
 }
