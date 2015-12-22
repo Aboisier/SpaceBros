@@ -1,0 +1,465 @@
+fileFormatVersion: 2
+guid: c5b53a6a0a493b4418319a823fd678f2
+timeCreated: 1450799075
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Body
+    21300002: Eye
+    21300004: Hair
+    21300006: LLowerArm
+    21300008: LUpperArm
+    21300010: Head
+    21300012: RUpperLeg
+    21300014: LUpperLeg
+    21300016: RLowerArm
+    21300018: Neck
+    21300020: LHand
+    21300022: RLowerLeg
+    21300024: RUpperArm
+    21300026: LLowerLeg
+    21300028: RHand
+    21300030: Body
+    21300032: Eye
+    21300034: Hair
+    21300036: LLowerArm
+    21300038: LUpperArm
+    21300040: Head
+    21300042: RUpperLeg
+    21300044: LUpperLeg
+    21300046: RLowerArm
+    21300048: Neck
+    21300050: LHand
+    21300052: RLowerLeg
+    21300054: RUpperArm
+    21300056: RLoweLeg
+    21300058: RHand
+    21300060: Antenna
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Body
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 712
+        width: 406
+        height: 305
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 125, y: -117.5}
+        - {x: 137, y: -111.5}
+        - {x: 158, y: -95.5}
+        - {x: 180, y: -74.5}
+        - {x: 196, y: -49.5}
+        - {x: 203, y: -29.5}
+        - {x: 203, y: 29.5}
+        - {x: 197, y: 49.5}
+        - {x: 182, y: 74.5}
+        - {x: 164, y: 93.5}
+        - {x: 143, y: 108.5}
+        - {x: 118, y: 124.5}
+        - {x: 69, y: 142.5}
+        - {x: 34, y: 148.5}
+        - {x: 6, y: 152.5}
+        - {x: -71, y: 152.5}
+        - {x: -84, y: 150.5}
+        - {x: -116, y: 139.5}
+        - {x: -131, y: 131.5}
+        - {x: -147, y: 118.5}
+        - {x: -171, y: 95.5}
+        - {x: -186, y: 74.5}
+        - {x: -199, y: 48.5}
+        - {x: -203, y: 33.5}
+        - {x: -203, y: -35.5}
+        - {x: -201, y: -44.5}
+        - {x: -185, y: -79.5}
+        - {x: -170, y: -98.5}
+        - {x: -148, y: -119.5}
+        - {x: -129, y: -131.5}
+        - {x: -107, y: -142.5}
+        - {x: -85, y: -150.5}
+        - {x: -73, y: -152.5}
+        - {x: 10, y: -152.5}
+        - {x: 37, y: -147.5}
+        - {x: 74, y: -139.5}
+        - {x: 103, y: -127.5}
+    - name: Eye
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 935
+        width: 87
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -42.5, y: 41}
+        - {x: -43.5, y: 39}
+        - {x: -43.5, y: -27}
+        - {x: -38.5, y: -41}
+        - {x: 43.5, y: -41}
+        - {x: 43.5, y: 41}
+    - name: Hair
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 456
+        width: 421
+        height: 252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 210.5, y: -22}
+        - {x: 205.5, y: -6}
+        - {x: 187.5, y: 22}
+        - {x: 176.5, y: 35}
+        - {x: 144.5, y: 64}
+        - {x: 126.5, y: 76}
+        - {x: 101.5, y: 92}
+        - {x: 52.5, y: 114}
+        - {x: 17.5, y: 124}
+        - {x: 2.5, y: 126}
+        - {x: -61.5, y: 126}
+        - {x: -72.5, y: 124}
+        - {x: -103.5, y: 115}
+        - {x: -137.5, y: 96}
+        - {x: -170.5, y: 66}
+        - {x: -197.5, y: 24}
+        - {x: -207.5, y: -1}
+        - {x: -210.5, y: -19}
+        - {x: -210.5, y: -69}
+        - {x: -207.5, y: -83}
+        - {x: -192.5, y: -108}
+        - {x: -179.5, y: -119}
+        - {x: -165.5, y: -126}
+        - {x: -161.5, y: -126}
+        - {x: -130.5, y: -123}
+        - {x: -84.5, y: -106}
+        - {x: -51.5, y: -100}
+        - {x: 9.5, y: -105}
+        - {x: 92.5, y: -126}
+        - {x: 155.5, y: -126}
+        - {x: 176.5, y: -118}
+        - {x: 200.5, y: -92}
+        - {x: 210.5, y: -61}
+    - name: LLowerArm
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 704
+        width: 68
+        height: 137
+      alignment: 9
+      pivot: {x: 0.49999955, y: 0.19286442}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -33.99997, y: 110.577576}
+        - {x: -33.99997, y: -26.422424}
+        - {x: 34.00003, y: -26.422424}
+        - {x: 34.00003, y: 85.577576}
+        - {x: 29.00003, y: 110.577576}
+    - name: LUpperArm
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 508
+        width: 78
+        height: 175
+      alignment: 9
+      pivot: {x: 0.47842172, y: 0.22108607}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -33.316895, y: 136.30994}
+        - {x: -37.316895, y: 103.30994}
+        - {x: -37.316895, y: -38.690063}
+        - {x: 36.683105, y: -38.690063}
+        - {x: 40.683105, y: -27.690063}
+        - {x: 40.683105, y: 123.30994}
+        - {x: 32.683105, y: 136.30994}
+    - name: Head
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 153
+        width: 427
+        height: 301
+      alignment: 9
+      pivot: {x: 0.05458846, y: 0.5055917}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 303.69073, y: -106.183105}
+        - {x: 333.69073, y: -71.183105}
+        - {x: 350.69073, y: -30.183105}
+        - {x: 391.69073, y: -9.183105}
+        - {x: 403.69073, y: 0.81689453}
+        - {x: 403.69073, y: 28.816895}
+        - {x: 387.69073, y: 41.816895}
+        - {x: 374.69073, y: 39.816895}
+        - {x: 359.69073, y: 27.816895}
+        - {x: 352.69073, y: 10.816895}
+        - {x: 347.69073, y: 36.816895}
+        - {x: 333.69073, y: 74.816895}
+        - {x: 310.69073, y: 100.816895}
+        - {x: 296.69073, y: 113.816895}
+        - {x: 257.69073, y: 137.8169}
+        - {x: 213.69073, y: 148.8169}
+        - {x: 114.690735, y: 148.8169}
+        - {x: 71.690735, y: 135.8169}
+        - {x: 45.690735, y: 122.816895}
+        - {x: 8.690735, y: 93.816895}
+        - {x: -18.309265, y: 49.816895}
+        - {x: -22.309265, y: 34.816895}
+        - {x: -23.309265, y: 27.816895}
+        - {x: -23.309265, y: -29.183105}
+        - {x: -14.309265, y: -52.183105}
+        - {x: 8.690735, y: -88.183105}
+        - {x: 31.690735, y: -111.183105}
+        - {x: 95.690735, y: -140.1831}
+        - {x: 129.69073, y: -147.1831}
+        - {x: 184.69073, y: -147.1831}
+        - {x: 194.69073, y: -152.1831}
+        - {x: 216.69073, y: -152.1831}
+        - {x: 219.69073, y: -151.1831}
+        - {x: 221.69073, y: -141.1831}
+        - {x: 240.69073, y: -139.1831}
+        - {x: 288.69073, y: -117.183105}
+    - name: RUpperLeg
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 343
+        width: 68
+        height: 164
+      alignment: 9
+      pivot: {x: 0.5, y: 0.17158993}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 30, y: 135.85925}
+        - {x: -30, y: 135.85925}
+        - {x: -34, y: 118.85925}
+        - {x: -34, y: -26.140747}
+        - {x: -30, y: -28.140747}
+        - {x: 25, y: -28.140747}
+        - {x: 34, y: -15.140747}
+        - {x: 34, y: 123.85925}
+        - {x: 33, y: 133.85925}
+    - name: LUpperLeg
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 167
+        width: 68
+        height: 161
+      alignment: 9
+      pivot: {x: 0.52475154, y: 0.16547038}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 16.316895, y: 134.35927}
+        - {x: -20.683105, y: 134.35927}
+        - {x: -35.683105, y: 120.35927}
+        - {x: -35.683105, y: -8.640732}
+        - {x: -29.683105, y: -26.640732}
+        - {x: 32.316895, y: -26.640732}
+        - {x: 32.316895, y: 124.35927}
+        - {x: 25.316895, y: 132.35927}
+    - name: RLowerArm
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 81
+        width: 135
+        height: 68
+      alignment: 9
+      pivot: {x: 0.1259772, y: 0.524752}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -17.00692, y: 32.316864}
+        - {x: -17.00692, y: -26.683136}
+        - {x: -12.00692, y: -35.683136}
+        - {x: 113.99308, y: -35.683136}
+        - {x: 117.99308, y: -23.683136}
+        - {x: 117.99308, y: 25.316864}
+        - {x: 108.99308, y: 32.316864}
+    - name: Neck
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 72
+        width: 67
+        height: 80
+      alignment: 9
+      pivot: {x: 0.8060186, y: 0.47896186}
+      border: {x: 12, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -54.003235, y: 41.683052}
+        - {x: -54.003235, y: -38.316948}
+        - {x: -8.003235, y: -38.316948}
+        - {x: 12.996765, y: -26.316948}
+        - {x: 12.996765, y: 22.683052}
+        - {x: -0.0032348633, y: 41.683052}
+    - name: LHand
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 83
+        width: 65
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 27.5, y: 31.5}
+        - {x: -21.5, y: 31.5}
+        - {x: -32.5, y: 26.5}
+        - {x: -32.5, y: -16.5}
+        - {x: -19.5, y: -31.5}
+        - {x: 15.5, y: -31.5}
+        - {x: 30.5, y: -22.5}
+        - {x: 32.5, y: -15.5}
+        - {x: 32.5, y: 24.5}
+    - name: RLowerLeg
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 0
+        width: 68
+        height: 165
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16337952}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 138.04239}
+        - {x: -34, y: 120.04238}
+        - {x: -34, y: -15.957619}
+        - {x: -26, y: -26.957619}
+        - {x: 20, y: -26.957619}
+        - {x: 34, y: -21.957619}
+        - {x: 34, y: 128.04239}
+        - {x: 30, y: 138.04239}
+    - name: RUpperArm
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 1
+        width: 172
+        height: 78
+      alignment: 9
+      pivot: {x: 0.098795146, y: 0.4784221}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 99.00723, y: 40.683075}
+        - {x: -6.9927673, y: 40.683075}
+        - {x: -16.992767, y: 28.683075}
+        - {x: -16.992767, y: -32.316925}
+        - {x: -9.992767, y: -37.316925}
+        - {x: 148.00723, y: -37.316925}
+        - {x: 155.00723, y: -17.316925}
+        - {x: 155.00723, y: 24.683075}
+        - {x: 144.00723, y: 36.683075}
+    - name: RLoweLeg
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 1
+        width: 170
+        height: 67
+      alignment: 9
+      pivot: {x: 0.16337954, y: 0.47487977}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -18.77452, y: 35.183056}
+        - {x: -27.77452, y: 27.183056}
+        - {x: -27.77452, y: -26.816944}
+        - {x: -20.77452, y: -31.816944}
+        - {x: 142.22548, y: -31.816944}
+        - {x: 142.22548, y: 35.183056}
+    - name: RHand
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 8
+        width: 65
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -18.5, y: 31.5}
+        - {x: -32.5, y: 26.5}
+        - {x: -32.5, y: -18.5}
+        - {x: -22.5, y: -29.5}
+        - {x: -15.5, y: -31.5}
+        - {x: 21.5, y: -31.5}
+        - {x: 32.5, y: -28.5}
+        - {x: 32.5, y: 22.5}
+        - {x: 22.5, y: 31.5}
+    - name: Antenna
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 279
+        width: 57
+        height: 62
+      alignment: 9
+      pivot: {x: 0.004789191, y: 0.28027102}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -0.27297974, y: 44.6232}
+        - {x: -0.27297974, y: -17.3768}
+        - {x: 13.72702, y: -17.3768}
+        - {x: 55.72702, y: 3.6231995}
+        - {x: 56.72702, y: 6.6231995}
+        - {x: 56.72702, y: 44.6232}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

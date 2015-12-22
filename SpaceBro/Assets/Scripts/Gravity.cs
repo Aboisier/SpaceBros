@@ -7,6 +7,7 @@ public class Gravity : MonoBehaviour {
     GameObject[] Planets;
     public float GravityMagnitude;
     Vector3 GravityForce;
+    public float GravityScale = 1;
 
     // Use this for initialization
     void Start () {
@@ -30,8 +31,8 @@ public class Gravity : MonoBehaviour {
             float gravityForce = GRAVITATIONNAL_CONSTANT * (GetComponent<Rigidbody2D>().mass * go.GetComponent<Rigidbody2D>().mass) /
                                  (Mathf.Pow(gravityDirection.magnitude, 3));
 
-            GetComponent<Rigidbody2D>().AddForce((gravityDirection).normalized * gravityForce);
-            GravityForce += (gravityDirection).normalized * gravityForce;
+            GetComponent<Rigidbody2D>().AddForce((gravityDirection).normalized * gravityForce * GravityScale);
+            GravityForce += (gravityDirection).normalized * gravityForce * GravityScale;
         }
 
         GravityMagnitude = GravityForce.magnitude;

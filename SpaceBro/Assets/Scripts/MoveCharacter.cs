@@ -20,17 +20,15 @@ public class MoveCharacter : MonoBehaviour
 
         Quaternion rot = Quaternion.Euler(new Vector3(0, 0, GetAngle(transform.position - FindClosestPlanet().transform.position) - 90));
         transform.rotation = rot;
-        //if (Rb.velocity.magnitude < 0.1)
-            
-        //else
-        //    Anim.Stop();
-
+        Anim.SetFloat("Speed", Rb.velocity.magnitude);
     }
 
     void HandleInput()
     {
         if (Input.GetKey(KeyCode.D) && Rb.velocity.magnitude < 5)
-            Rb.AddForce(transform.right * 8);    
+            Rb.AddForce(transform.right * 50);
+        if (Input.GetKey(KeyCode.A) && Rb.velocity.magnitude < 5)
+            Rb.AddForce(transform.right * -50);
     }
 
     GameObject FindClosestPlanet()
