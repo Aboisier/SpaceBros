@@ -5,12 +5,15 @@ public class MoveCharacter : MonoBehaviour
     GameObject[] Planets;
     Rigidbody2D Rb { get; set; }
     Animator Anim { get; set; }
+    bool isWalking { get; set; }
+
     // Use this for initialization
     void Start()
     {
         Planets = GameObject.FindGameObjectsWithTag("Planet");
         Rb = GetComponent<Rigidbody2D>();
         Anim = GetComponent<Animator>();
+        Anim.updateMode = AnimatorUpdateMode.AnimatePhysics;
     }
 
     // Update is called once per frame
@@ -20,15 +23,39 @@ public class MoveCharacter : MonoBehaviour
 
         Quaternion rot = Quaternion.Euler(new Vector3(0, 0, GetAngle(transform.position - FindClosestPlanet().transform.position) - 90));
         transform.rotation = rot;
-        Anim.SetFloat("Speed", Rb.velocity.magnitude);
+
+        SetAnimationParameters();
     }
 
     void HandleInput()
     {
+        isWalking = false;
+       
         if (Input.GetKey(KeyCode.D) && Rb.velocity.magnitude < 5)
+        {
+
+            Vector3 theScale = transform.localScale;
+            theScale.x = Mathf.Abs(theScale.x);
+            transform.localScale = theScale;
             Rb.AddForce(transform.right * 50);
+            isWalking = true;
+        }
         if (Input.GetKey(KeyCode.A) && Rb.velocity.magnitude < 5)
+        {
+
+            Vector3 theScale = transform.localScale;
+            theScale.x = -Mathf.Abs(theScale.x);
+            transform.localScale = theScale;
             Rb.AddForce(transform.right * -50);
+            isWalking = true;
+        }
+
+    }
+
+    void SetAnimationParameters()
+    {
+        Anim.SetFloat("Speed", Rb.velocity.magnitude);
+        Anim.SetBool("IsWalking", isWalking);
     }
 
     GameObject FindClosestPlanet()
