@@ -69,7 +69,7 @@ public class PlanetNameGenerator : MonoBehaviour {
 
         // Generates the name
         int n = Random.Range(2, 4); // Number of syllabes
-        for (int i = 0; i < 2; ++i)
+        for (int i = 0; i < n; ++i)
         {
             do
             {

@@ -2,10 +2,14 @@
 
 public class MoveCharacter : MonoBehaviour
 {
+    const float INITIAL_DRAG = 20;
+    const float FALLING_DRAG = 1;
+
     GameObject[] Planets;
     Rigidbody2D Rb { get; set; }
     Animator Anim { get; set; }
     bool isWalking { get; set; }
+    bool isJumping { get; set; }
 
     // Use this for initialization
     void Start()
@@ -17,9 +21,19 @@ public class MoveCharacter : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        HandleInput();
+        if (Rb.IsTouchingLayers())
+        {
+            Rb.drag = INITIAL_DRAG;
+            isJumping = false;
+        }
+        else
+        {
+            Rb.drag = FALLING_DRAG;
+
+        }
+        HandleInput(); 
 
         Quaternion rot = Quaternion.Euler(new Vector3(0, 0, GetAngle(transform.position - FindClosestPlanet().transform.position) - 90));
         transform.rotation = rot;
@@ -30,14 +44,22 @@ public class MoveCharacter : MonoBehaviour
     void HandleInput()
     {
         isWalking = false;
-       
+
+        if (Input.GetKey(KeyCode.W) && !isJumping)
+        {
+            isJumping = true;
+            Rb.AddForce(transform.up * 140);
+            Rb.drag = 1;
+
+        }
+
         if (Input.GetKey(KeyCode.D) && Rb.velocity.magnitude < 5)
         {
 
             Vector3 theScale = transform.localScale;
             theScale.x = Mathf.Abs(theScale.x);
             transform.localScale = theScale;
-            Rb.AddForce(transform.right * 50);
+            Rb.AddForce(transform.right * Rb.drag * 3f);
             isWalking = true;
         }
         if (Input.GetKey(KeyCode.A) && Rb.velocity.magnitude < 5)
@@ -46,7 +68,7 @@ public class MoveCharacter : MonoBehaviour
             Vector3 theScale = transform.localScale;
             theScale.x = -Mathf.Abs(theScale.x);
             transform.localScale = theScale;
-            Rb.AddForce(transform.right * -50);
+            Rb.AddForce(transform.right * Rb.drag * -3f);
             isWalking = true;
         }
 
@@ -54,7 +76,6 @@ public class MoveCharacter : MonoBehaviour
 
     void SetAnimationParameters()
     {
-        Anim.SetFloat("Speed", Rb.velocity.magnitude);
         Anim.SetBool("IsWalking", isWalking);
     }
 
