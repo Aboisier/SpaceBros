@@ -26,6 +26,12 @@ public class MoveCharacter : MonoBehaviour
         Anim.updateMode = AnimatorUpdateMode.AnimatePhysics;
     }
 
+    void Update()
+    {
+        Quaternion rot = Quaternion.Euler(new Vector3(0, 0, GetAngle(transform.position - FindClosestPlanet().transform.position) - 90));
+        transform.rotation = rot;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -45,9 +51,6 @@ public class MoveCharacter : MonoBehaviour
 
         }
         HandleInput();
-
-        Quaternion rot = Quaternion.Euler(new Vector3(0, 0, GetAngle(transform.position - FindClosestPlanet().transform.position) - 90));
-        transform.rotation = rot;
 
         SetAnimationParameters();
     }
@@ -109,9 +112,6 @@ public class MoveCharacter : MonoBehaviour
 
         // If the direction the character is moving equals the direction it is looking, then the animation plays normally. Otherwise, it plays backwards.
         //print(moveDirection.ToString());
-
-        //print(LookDirection);
-
         Anim.SetFloat("SpeedMultiplier", moveDirection == LookDirection ? 1 : -1);
     }
 
