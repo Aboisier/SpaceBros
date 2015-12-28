@@ -52,7 +52,7 @@ public class Follow : MonoBehaviour {
         if ((trans.position - transform.position).magnitude > MAX_DIST)
             transform.position += (trans.position - transform.position).normalized * ((trans.position - transform.position).magnitude - MAX_DIST);
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, trans.rotation, 0.1f);
+        transform.rotation = Quaternion.Lerp(transform.rotation, trans.rotation, 0.05f);
         transform.position = new Vector3(transform.position.x, transform.position.y, -5);
 
         cam.orthographicSize = INITIAL_SIZE / Mathf.Max(SpaceshipGravity.GravityMagnitude, 1);
