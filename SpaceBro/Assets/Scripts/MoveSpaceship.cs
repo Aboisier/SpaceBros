@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MoveSpaceship : MonoBehaviour {
     public ParticleSystem Ps;
+    public GameObject CharacterPrefab;
     Rigidbody2D Rb;
     float EnginePower = 4;
 

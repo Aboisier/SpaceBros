@@ -14,8 +14,8 @@ public sealed class Planets : MonoBehaviour {
     List<Color> Colors = new List<Color> {  new Color( 239/255f,  65/255f,  54/255f), // Orange
                                             new Color( 190/255f,  30/255f,  45/255f), // Darker orange
                                             new Color(   0/255f, 148/255f,  68/255f), // Green
-                                            new Color(   1/255f,  65/255f,  54/255f),  // Turquoise
-                                            new Color(  28/255f, 125/255f, 188/255f),
+                                            new Color(   1/255f,  65/255f,  54/255f), // Turquoise
+                                            new Color(  28/255f, 125/255f, 188/255f), // Got bored here
                                             new Color(  39/255f, 170/255f, 225/255f),
                                             new Color(   0/255f, 104/255f,  56/255f),
                                             new Color( 247/255f, 148/255f,  30/255f),
@@ -36,7 +36,7 @@ public sealed class Planets : MonoBehaviour {
     public void AddRandomPlanet()
     {
         // Instantiate the planet
-        GameObject go = Instantiate(TemplatePlanet, Vector3.zero, Quaternion.identity) as GameObject;
+        GameObject go = Instantiate(TemplatePlanet, Vector3.zero + new Vector3(0,0,2), Quaternion.identity) as GameObject;
 
         // Sets the scaling and the mass of the planet
         float scale = Random.Range(MIN_SCALE, MAX_SCALE);
@@ -47,13 +47,14 @@ public sealed class Planets : MonoBehaviour {
         int primary = Random.Range(0, Colors.Count);
         int second = Random.Range(0, Colors.Count);
         int pattern = Random.Range(0, PlanetPatterns.Count);
+
         go.transform.FindChild("base").GetComponent<SpriteRenderer>().color = Colors[primary];
         go.transform.FindChild("halo").GetComponent<SpriteRenderer>().color = Colors[second]/1.5f + new Color(0,0,0,1);
         go.transform.FindChild("spots").GetComponent<SpriteRenderer>().color = Colors[second];
         go.transform.FindChild("spots").transform.Rotate(0, 0, Random.Range(0, 360));
-
         go.transform.FindChild("spots").GetComponent<SpriteRenderer>().sprite = PlanetPatterns[pattern];
 
+        // Generates a name
         go.name = PlanetNameGenerator.GenerateName();
 
         // Adds the planet to the list

@@ -7,6 +7,8 @@ public static class PlanetNameGenerator {
     const float NUMBER_AT_BEGINNING_PROB = 0.1f;
     const float LETTER_AT_END_PROB = 0.1f;
     const float NUMBER_AT_END_PROB = 0.1f;
+    const int MIN_SYLLABES_NB = 2;
+    const int MAX_SYLLABES_NB = 3;
 
     static StreamReader SrSyllabes;
     static string badSyllabes;
@@ -19,7 +21,6 @@ public static class PlanetNameGenerator {
 
         badSyllabes = System.IO.File.ReadAllText("BadSyllabes.txt");
     }
-
 
     static string ReadAtLine(int n, StreamReader sr)
     {
@@ -59,7 +60,8 @@ public static class PlanetNameGenerator {
         string temp = string.Empty;
 
         // Generates the name
-        int n = Random.Range(2, 4); // Number of syllabes
+        int n = Random.Range(MIN_SYLLABES_NB, MAX_SYLLABES_NB); // Number of syllabes
+
         for (int i = 0; i < n; ++i)
         {
             do
