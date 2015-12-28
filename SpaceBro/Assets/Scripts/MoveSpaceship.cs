@@ -2,10 +2,12 @@
 using System.Collections;
 
 public class MoveSpaceship : MonoBehaviour {
+    const float MAX_VELOCITY = 12;
+
     public ParticleSystem Ps;
     public GameObject CharacterPrefab;
     Rigidbody2D Rb;
-    float EnginePower = 4;
+    float EnginePower = 7;
 
 	// Use this for initialization
 	void Start () {
@@ -20,18 +22,18 @@ public class MoveSpaceship : MonoBehaviour {
 
     void HandleInput()
     {
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.W) && Rb.velocity.magnitude < MAX_VELOCITY)
         {
             Rb.AddForce(transform.up * EnginePower);
             Ps.Play();
 
         }
-        if (Input.GetKeyUp(KeyCode.UpArrow))
+        if (Input.GetKeyUp(KeyCode.W))
             Ps.Stop();
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A))
             Rb.AddTorque(EnginePower / 4);
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.D))
             Rb.AddTorque(-EnginePower / 4);
     }
 }

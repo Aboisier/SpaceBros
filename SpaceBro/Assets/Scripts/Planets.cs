@@ -49,7 +49,7 @@ public sealed class Planets : MonoBehaviour {
         int pattern = Random.Range(0, PlanetPatterns.Count);
 
         go.transform.FindChild("base").GetComponent<SpriteRenderer>().color = Colors[primary];
-        go.transform.FindChild("halo").GetComponent<SpriteRenderer>().color = Colors[second]/1.5f + new Color(0,0,0,1);
+        go.transform.FindChild("halo").GetComponent<SpriteRenderer>().color = Colors[second]/1.5f - new Color(0,0,0,0.3f);
         go.transform.FindChild("spots").GetComponent<SpriteRenderer>().color = Colors[second];
         go.transform.FindChild("spots").transform.Rotate(0, 0, Random.Range(0, 360));
         go.transform.FindChild("spots").GetComponent<SpriteRenderer>().sprite = PlanetPatterns[pattern];
