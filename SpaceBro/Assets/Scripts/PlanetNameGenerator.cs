@@ -2,35 +2,26 @@
 using System.IO;
 using UnityEngine.UI;
 
-public class PlanetNameGenerator : MonoBehaviour {
+public static class PlanetNameGenerator {
 
     const float NUMBER_AT_BEGINNING_PROB = 0.1f;
     const float LETTER_AT_END_PROB = 0.1f;
     const float NUMBER_AT_END_PROB = 0.1f;
 
-    StreamReader SrSyllabes;
-    string badSyllabes;
-
-    int nbNames;
-    public string currentSyllabes = "";
+    static StreamReader SrSyllabes;
+    static string badSyllabes;
+    static int nbNames;
 
     // Use this for initialization
-    void Start() {
+    static PlanetNameGenerator() {
         SrSyllabes = new StreamReader("syllabes.txt");
         nbNames = int.Parse(SrSyllabes.ReadLine());
 
         badSyllabes = System.IO.File.ReadAllText("BadSyllabes.txt");
     }
 
-    // Update is called once per frame
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            GetComponent<Text>().text = GenerateName();
-        }
-    }
 
-    string ReadAtLine(int n, StreamReader sr)
+    static string ReadAtLine(int n, StreamReader sr)
     {
         sr.DiscardBufferedData();
         sr.BaseStream.Position = 0;
@@ -41,12 +32,12 @@ public class PlanetNameGenerator : MonoBehaviour {
         return sr.ReadLine();
     }
 
-    bool Probability(float probability)
+    static bool Probability(float probability)
     {
         return Random.Range(0f, 10000f) / 10000 < probability;
     }
 
-    bool IsGoodName(string name)
+    static bool IsGoodName(string name)
     {
         for (int i = 2; i < name.Length; ++i)
         {
@@ -60,7 +51,7 @@ public class PlanetNameGenerator : MonoBehaviour {
         return true;
     }
 
-    string GenerateName()
+    public static string GenerateName()
     {
         // Initialisation
         string name = string.Empty;
@@ -79,8 +70,6 @@ public class PlanetNameGenerator : MonoBehaviour {
             name += temp;
         }
 
-        currentSyllabes = name; // For learning purpose
-
         // Generates the end and adds cool stuff
         if (Probability(NUMBER_AT_END_PROB))
             end += Random.Range(1, 10);
@@ -94,10 +83,5 @@ public class PlanetNameGenerator : MonoBehaviour {
             end = "-" + end;
 
         return name + end;
-    }
-
-    void OnApplicationQuit()
-    {
-        SrSyllabes.Close();
     }
 }

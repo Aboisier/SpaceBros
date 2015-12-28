@@ -6,14 +6,27 @@ public sealed class Planets : MonoBehaviour {
     const float DEFAULT_PLANET_RADIUS = 30;
     const float DEFAULT_GRAVITY = 3.25f;
     const float GRAVITY_UNCERTAINTY = 1f;
+    const float MAX_SCALE = 1f;
+    const float MIN_SCALE = 0.25f;
 
-    List<Color> Colors =  new List<Color> { new Color(239/255f,  65/255f,  54/255f), // Orange
-                                            new Color(190/255f,  30/255f,  45/255f), // Darker orange
-                                            new Color(  0/255f, 148/255f,  68/255f), // Green
-                                            new Color(1/255f,  65/255f,  54/255f)};  // Turquoise
+    public List<Sprite> PlanetPatterns;
 
+    List<Color> Colors = new List<Color> {  new Color( 239/255f,  65/255f,  54/255f), // Orange
+                                            new Color( 190/255f,  30/255f,  45/255f), // Darker orange
+                                            new Color(   0/255f, 148/255f,  68/255f), // Green
+                                            new Color(   1/255f,  65/255f,  54/255f),  // Turquoise
+                                            new Color(  28/255f, 125/255f, 188/255f),
+                                            new Color(  39/255f, 170/255f, 225/255f),
+                                            new Color(   0/255f, 104/255f,  56/255f),
+                                            new Color( 247/255f, 148/255f,  30/255f),
+                                            new Color( 141/255f, 198/255f,  63/255f),
+                                            new Color(  96/255f,  57/255f,  19/255f),
+                                            new Color( 146/255f,  39/255f, 143/255f),
+                                            new Color(  43/255f,  53/255f, 144/255f),
+                                            new Color(  93/255f, 130/255f,   0/255f) };
     public List<GameObject> PlanetsList;
-    public GameObject GenericPlanet;
+    public GameObject TemplatePlanet;
+
     public float maxDist;
     void Start () {
         PlanetsList = new List<GameObject>();
@@ -22,15 +35,31 @@ public sealed class Planets : MonoBehaviour {
 
     public void AddRandomPlanet()
     {
-        GameObject go = Instantiate(GenericPlanet, Vector3.zero, Quaternion.identity) as GameObject;
-        float scale = Random.Range(0.10f, 2f);
-        go.transform.localScale = new Vector3(scale, scale, 1);
+        // Instantiate the planet
+        GameObject go = Instantiate(TemplatePlanet, Vector3.zero, Quaternion.identity) as GameObject;
 
+        // Sets the scaling and the mass of the planet
+        float scale = Random.Range(MIN_SCALE, MAX_SCALE);
+        go.transform.localScale = new Vector3(scale, scale, 1);
         go.GetComponent<Rigidbody2D>().mass = GenerateRandomMass(DEFAULT_PLANET_RADIUS * scale);
 
-        go.GetComponent<SpriteRenderer>().color = Colors[Random.Range(0, Colors.Count)];
+        // Picks random colours from the list, chooses a pattern and rotates it.
+        int primary = Random.Range(0, Colors.Count);
+        int second = Random.Range(0, Colors.Count);
+        int pattern = Random.Range(0, PlanetPatterns.Count);
+        go.transform.FindChild("base").GetComponent<SpriteRenderer>().color = Colors[primary];
+        go.transform.FindChild("halo").GetComponent<SpriteRenderer>().color = Colors[second]/1.5f + new Color(0,0,0,1);
+        go.transform.FindChild("spots").GetComponent<SpriteRenderer>().color = Colors[second];
+        go.transform.FindChild("spots").transform.Rotate(0, 0, Random.Range(0, 360));
+
+        go.transform.FindChild("spots").GetComponent<SpriteRenderer>().sprite = PlanetPatterns[pattern];
+
+        go.name = PlanetNameGenerator.GenerateName();
+
+        // Adds the planet to the list
         PlanetsList.Add(go);
     }
+
 
 
     public float GenerateRandomMass(float radius)
