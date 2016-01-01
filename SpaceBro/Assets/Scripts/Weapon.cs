@@ -34,11 +34,15 @@ public class Weapon : MonoBehaviour
 
         Debug.DrawLine(firePoint, mouse + (mouse - firePoint) * 100, Color.green, 0.02f);
 
-        RaycastHit2D hit = Physics2D.Raycast(firePoint, mouse - firePoint, 100);
+        RaycastHit2D hit = Physics2D.Raycast(firePoint, mouse - firePoint, 100, WhatToHit);
 
         if (hit.collider != null)
         {
             Debug.DrawLine(firePoint, hit.point, Color.red, 0.02f);
+
+            if(hit.collider.GetComponent<CharacterAI>() != null)
+                hit.collider.GetComponent<CharacterAI>().Hit(Damage);
+
         }
     }
 }

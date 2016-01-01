@@ -2,7 +2,7 @@
 public enum Direction { LEFT = -1, RIGHT = 1 }
 public class MoveCharacter : MonoBehaviour
 {
-    Planets planets;
+    public Planets planets;
     const float INITIAL_DRAG = 20;
     const float FALLING_DRAG = 0.1f;
     const int JUMP_COOLDOWN = 20;
@@ -13,8 +13,12 @@ public class MoveCharacter : MonoBehaviour
     bool isJumping { get; set; }
     int jumpTimer = 0;
 
-    public Direction LookDirection { get; private set; }
-    Direction moveDirection { get; set; }
+    //Debugging
+    public float angle;
+
+    public bool isAutonomous;
+    public Direction LookDirection { get; set; }
+    public Direction moveDirection { get; set; }
 
     // Use this for initialization
     void Start()
@@ -34,23 +38,25 @@ public class MoveCharacter : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        SetDirection();
-
-        if (jumpTimer >= 0)
-            jumpTimer -= 1;
-
-        if (Rb.IsTouchingLayers())
+        if (isAutonomous)
         {
-            Rb.drag = INITIAL_DRAG;
-            isJumping = false;
-        }
-        else
-        {
-            Rb.drag = FALLING_DRAG;
+            SetDirection();
 
-        }
-        HandleInput();
+            if (jumpTimer >= 0)
+                jumpTimer -= 1;
 
+            if (Rb.IsTouchingLayers())
+            {
+                Rb.drag = INITIAL_DRAG;
+                isJumping = false;
+            }
+            else
+            {
+                Rb.drag = FALLING_DRAG;
+
+            }
+            HandleInput();
+        }
         SetAnimationParameters();
     }
 
@@ -75,7 +81,7 @@ public class MoveCharacter : MonoBehaviour
         transform.localScale = scale;
     }
 
-    void Move(Direction dir)
+    public void Move(Direction dir)
     {
         moveDirection = dir;
 
@@ -99,10 +105,13 @@ public class MoveCharacter : MonoBehaviour
 
     void SetDirection()
     {
-        if (Input.mousePosition.x < Camera.main.WorldToScreenPoint(transform.position).x)
-            Flip(Direction.LEFT);
-        else
-            Flip(Direction.RIGHT);
+        if (isAutonomous)
+        {
+            if (Input.mousePosition.x < Camera.main.WorldToScreenPoint(transform.position).x)
+                Flip(Direction.LEFT);
+            else
+                Flip(Direction.RIGHT);
+        }
     }
 
     void SetAnimationParameters()
@@ -114,8 +123,6 @@ public class MoveCharacter : MonoBehaviour
         Anim.SetFloat("SpeedMultiplier", moveDirection == LookDirection ? 1 : -1);
     }
 
-   
-
     //Gets the angle between the vector and the positive x axis
     float GetAngle(Vector3 v)
     {
@@ -126,6 +133,5 @@ public class MoveCharacter : MonoBehaviour
     {
         return Mathf.Acos(Vector3.Dot(v1.normalized, v2.normalized));
     }
-
 
 }

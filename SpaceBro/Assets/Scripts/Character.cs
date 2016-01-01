@@ -6,13 +6,14 @@ public class Character : MonoBehaviour {
 
     public GameObject CharacterPrefab;
 
+    public Vector3 Position { get; private set; }
+
     GameObject Spaceship;
     MoveSpaceship MoveSpaceship;
     GameObject Char;
+    MoveCharacter MoveCharacter;
     SpriteRenderer CaptnBroHead;
     Animator GlassAnim;
-
-
 
     Follow Follow;
     bool isInShip = true;
@@ -29,8 +30,13 @@ public class Character : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
         HandleInput();
+
+        if (isInShip)
+            Position = Spaceship.transform.position;
+        else
+            Position = Char.transform.position;
+
 	}
 
     void HandleInput()
@@ -40,6 +46,7 @@ public class Character : MonoBehaviour {
             if (isInShip)
             {
                 Char = Instantiate(CharacterPrefab, Spaceship.transform.position , Spaceship.transform.rotation) as GameObject;
+                MoveCharacter = Char.GetComponent<MoveCharacter>();
                 isInShip = false;
                 Follow.go = Char;
                 Follow.size = Follow.CHARACTER_SIZE;
@@ -58,5 +65,16 @@ public class Character : MonoBehaviour {
                 MoveSpaceship.enabled = true;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if (Follow.size == Follow.CHARACTER_SIZE || Follow.size == Follow.SPACESHIP_SIZE)
+                Follow.size = Follow.UNZOOMED_SIZE;
+            else if (isInShip)
+                Follow.size = Follow.SPACESHIP_SIZE;
+            else
+                Follow.size = Follow.CHARACTER_SIZE;
+        }
+
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MoveSpaceship : MonoBehaviour {
     const float MAX_VELOCITY = 12;
+    const float MAX_ANGULAR_VELOCITY = 150;
 
     public ParticleSystem Ps;
     public GameObject CharacterPrefab;
@@ -17,7 +18,7 @@ public class MoveSpaceship : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        HandleInput();
+        HandleInput();        
     }
 
     void HandleInput()
@@ -28,12 +29,20 @@ public class MoveSpaceship : MonoBehaviour {
             Ps.Play();
 
         }
+
         if (Input.GetKeyUp(KeyCode.W))
             Ps.Stop();
 
-        if (Input.GetKey(KeyCode.A))
-            Rb.AddTorque(EnginePower / 4);
-        if (Input.GetKey(KeyCode.D))
-            Rb.AddTorque(-EnginePower / 4);
+        // Rotation
+        if (Input.GetKey(KeyCode.A) && Rb.angularVelocity < MAX_ANGULAR_VELOCITY)
+            Rb.AddTorque(EnginePower / 3);
+        if (Input.GetKey(KeyCode.D) && Rb.angularVelocity > -MAX_ANGULAR_VELOCITY)
+            Rb.AddTorque(-EnginePower / 3);
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Rb.AddForce(-Rb.velocity);
+            Rb.AddTorque(-Rb.angularVelocity/50f);
+        }
     }
 }
