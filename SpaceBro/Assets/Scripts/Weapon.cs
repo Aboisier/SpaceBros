@@ -11,6 +11,8 @@ public class Weapon : MonoBehaviour
     public bool isAutonomous;
     public float BetweenShots = 0.6f;
     float timer;
+    LineRenderer lineRenderer;
+
     // Use this for initialization
     void Start()
     {
@@ -18,6 +20,12 @@ public class Weapon : MonoBehaviour
         if (FirePoint == null)
             Debug.LogError("No FirePoint");
         timer = 0;
+        lineRenderer = GetComponent<LineRenderer>();
+        if (lineRenderer != null)
+        {
+            lineRenderer.useWorldSpace = true;
+            lineRenderer.enabled = false;
+        }
     }
 
     // Update is called once per frame
@@ -40,17 +48,21 @@ public class Weapon : MonoBehaviour
             Vector2 firePoint = new Vector2(FirePoint.position.x, FirePoint.position.y);
 
             RaycastHit2D hit = Physics2D.Raycast(firePoint, mouse - firePoint, 100, WhatToHit);
+            lineRenderer.enabled = true;
+            lineRenderer.SetPosition(0, firePoint);
 
             if (hit.collider != null)
             {
-                Debug.DrawLine(firePoint, hit.point, Color.red, 0.02f);
+                
+                if(lineRenderer != null)
+                    lineRenderer.SetPosition(1, hit.point);
 
                 if (hit.collider.GetComponent<CharacterAI>() != null)
                     hit.collider.GetComponent<CharacterAI>().Hit(Damage);
 
             }
-            else
-                Debug.DrawLine(firePoint, mouse + (mouse - firePoint) * 100, Color.green, 0.02f);
+            else if(lineRenderer != null)
+                lineRenderer.SetPosition(1, mouse + (mouse - firePoint) * 100);
         }
     }
 }
