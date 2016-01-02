@@ -6,8 +6,20 @@ public class Character : MonoBehaviour {
 
     public GameObject CharacterPrefab;
 
-    public Vector3 Position { get; private set; }
-
+    public Vector3 Position
+    {
+        get
+        {
+            return isInShip ? MoveSpaceship.transform.position : MoveCharacter.transform.position;
+        }
+    }
+    public Vector3 Rotation
+    {
+        get
+        {
+            return isInShip ? MoveSpaceship.transform.rotation.eulerAngles : MoveCharacter.transform.rotation.eulerAngles;
+        }
+    }
     GameObject Spaceship;
     MoveSpaceship MoveSpaceship;
     GameObject Char;
@@ -27,16 +39,10 @@ public class Character : MonoBehaviour {
         CaptnBroHead = Spaceship.transform.FindChild("CaptnBroHead").GetComponent<SpriteRenderer>();
         GlassAnim = Spaceship.transform.FindChild("Glass").GetComponent<Animator>();
     }
-	
+
 	// Update is called once per frame
 	void Update () {
         HandleInput();
-
-        if (isInShip)
-            Position = Spaceship.transform.position;
-        else
-            Position = Char.transform.position;
-
 	}
 
     void HandleInput()

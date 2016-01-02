@@ -2,36 +2,54 @@
 using System.Collections;
 
 public class CharacterAI : MonoBehaviour {
+    const float RANDOM_OFFSET_FREQUENCY   = 1f;
+    const float FOCUS_POINT_PRECISION     = 1f;
+    const float FOLLOW_MAIN_CHAR_DISTANCE = 2.5f;
+
+    public Vector3 Position
+    {
+        get
+        {
+            return  MoveCharacter.transform.position;
+        }
+    }
+    public Vector3 Rotation
+    {
+        get
+        {
+            return MoveCharacter.transform.rotation.eulerAngles;
+        }
+    }
 
     enum Behavior { PASSIVE, AGRESSIVE }
 
-    Behavior behavior = Behavior.AGRESSIVE;
+    Behavior behavior = Behavior.PASSIVE;
     Character MainCharacter;
     MoveCharacter MoveCharacter;
-    float Health = 20;
-    public float angle;
-    public float MainCharAngle;
-    public float AIangle;
-    public float Result;
+    float Health = 40;
+    float RandomOffsetCountdown { get; set; }
+    Weapon weapon { get; set; }
+
+    public Vector3 FocusPoint { get; private set; }
+    Vector3 FocusPointRandomOffset { get; set; }
 
 	// Use this for initialization
 	void Start () {
+        RandomOffsetCountdown = 0;
         MoveCharacter = GetComponent<MoveCharacter>();
         GameObject go = GameObject.FindGameObjectWithTag("Player");
         if (go != null)
             MainCharacter = go.GetComponent<Character>();
+
+        weapon = GetComponentInChildren<Weapon>();
 	}
 
     // Update is called once per frame
     void Update()
     {
-
-        
-        //MoveCharacter.Move(MoveCharacter.moveDirection);
-
         //Checks the health of the NPC
         if (Health < 0)
-            Destroy(gameObject);
+            Die();
 
         switch (behavior)
         {
@@ -45,37 +63,37 @@ public class CharacterAI : MonoBehaviour {
         }
     }
 
-    void LookAtMainCharacter()
+    void Die()
     {
-        GameObject planet = MoveCharacter.planets.FindClosestPlanet(MoveCharacter.transform.position);
-        Vector3 vA = MainCharacter.Position - planet.transform.position;
-        Vector3 vB = MoveCharacter.transform.position - planet.transform.position;
-        angle = Vector3.Angle(vA, vB);
-        
-        AIangle = Mathf.Atan2(vA.x, vA.y) * Mathf.Rad2Deg;
-        MainCharAngle = Mathf.Atan2(vB.x, vB.y) * Mathf.Rad2Deg;
-
-        if(Mathf.Abs(WrapAngle(AIangle + angle - MainCharAngle)) < 1)
-            MoveCharacter.LookDirection = MoveCharacter.moveDirection = Direction.LEFT;
-        else
-            MoveCharacter.LookDirection = MoveCharacter.moveDirection = Direction.RIGHT;
-        MoveCharacter.Move(MoveCharacter.moveDirection);
-        Result = Mathf.Abs(WrapAngle(AIangle + angle - MainCharAngle));
+        Destroy(gameObject);
     }
 
-    float WrapAngle(float angle)
+    void LookAtMainCharacter()
     {
-        if (angle > 180)
-            angle -= 360;
-        if (angle < -180)
-            angle += 360;
-
-        return angle;
+        Vector3 delta = MoveCharacter.transform.position - MainCharacter.Position;
+        MoveCharacter.Flip(Vector3.Angle(delta, MoveCharacter.transform.right) < 90 ? Direction.LEFT : Direction.RIGHT);
     }
 
     void Agressive()
     {
+        if (weapon != null)
+        {
+            RandomOffsetCountdown += Time.deltaTime;
+            if (RandomOffsetCountdown > RANDOM_OFFSET_FREQUENCY)
+            {
+                FocusPointRandomOffset = RandomVector(-FOCUS_POINT_PRECISION, FOCUS_POINT_PRECISION);
+                weapon.Shoot(FocusPoint);
+                RandomOffsetCountdown = 0;
+            }
+        }
+        FocusPoint = MainCharacter.Position + FocusPointRandomOffset;
+        //Debug.DrawLine(MoveCharacter.transform.position, FocusPoint);
+
         LookAtMainCharacter();
+
+        if ((int)DistanceFromMainChar() > FOLLOW_MAIN_CHAR_DISTANCE)
+            MoveCharacter.Move(MoveCharacter.LookDirection, 1 + DistanceFromMainChar() / 4f, 2);
+        
     }
 
     void Passive()
@@ -83,8 +101,19 @@ public class CharacterAI : MonoBehaviour {
 
     }
 
+    Vector3 RandomVector(float min, float max)
+    {
+        return new Vector3(Random.Range(min, max), Random.Range(min, max), Random.Range(min, max));
+    }
+
+    float DistanceFromMainChar()
+    {
+        return (MainCharacter.Position - MoveCharacter.transform.position).magnitude;
+    }
+
     public void Hit(float dmg)
     {
         Health -= dmg;
+        behavior = Behavior.AGRESSIVE; // Makes the NPC mad cause he's been hit
     }
 }

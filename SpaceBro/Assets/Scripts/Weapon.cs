@@ -8,41 +8,49 @@ public class Weapon : MonoBehaviour
     public LayerMask WhatToHit;
     Transform FirePoint;
     public float Damage = 10;
-
+    public bool isAutonomous;
+    public float BetweenShots = 0.6f;
+    float timer;
     // Use this for initialization
     void Start()
     {
         FirePoint = transform.FindChild("FirePoint");
         if (FirePoint == null)
             Debug.LogError("No FirePoint");
+        timer = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        timer += Time.deltaTime;
+
+        if (isAutonomous && Input.GetMouseButtonDown(0))
         {
-            Shoot();
+            Shoot(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }
     }
 
-    void Shoot()
+    public void Shoot(Vector3 target)
     {
-        Vector2 mouse = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,
-                                    Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-        Vector2 firePoint = new Vector2(FirePoint.position.x, FirePoint.position.y);
-
-        Debug.DrawLine(firePoint, mouse + (mouse - firePoint) * 100, Color.green, 0.02f);
-
-        RaycastHit2D hit = Physics2D.Raycast(firePoint, mouse - firePoint, 100, WhatToHit);
-
-        if (hit.collider != null)
+        if (timer > BetweenShots)
         {
-            Debug.DrawLine(firePoint, hit.point, Color.red, 0.02f);
+            timer = 0;
+            Vector2 mouse = new Vector2(target.x, target.y);
+            Vector2 firePoint = new Vector2(FirePoint.position.x, FirePoint.position.y);
 
-            if(hit.collider.GetComponent<CharacterAI>() != null)
-                hit.collider.GetComponent<CharacterAI>().Hit(Damage);
+            RaycastHit2D hit = Physics2D.Raycast(firePoint, mouse - firePoint, 100, WhatToHit);
 
+            if (hit.collider != null)
+            {
+                Debug.DrawLine(firePoint, hit.point, Color.red, 0.02f);
+
+                if (hit.collider.GetComponent<CharacterAI>() != null)
+                    hit.collider.GetComponent<CharacterAI>().Hit(Damage);
+
+            }
+            else
+                Debug.DrawLine(firePoint, mouse + (mouse - firePoint) * 100, Color.green, 0.02f);
         }
     }
 }

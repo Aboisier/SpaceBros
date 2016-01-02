@@ -2,45 +2,40 @@
 public enum Direction { LEFT = -1, RIGHT = 1 }
 public class MoveCharacter : MonoBehaviour
 {
-    public Planets planets;
     const float INITIAL_DRAG = 20;
     const float FALLING_DRAG = 0.1f;
-    const int JUMP_COOLDOWN = 20;
+    const int  JUMP_COOLDOWN = 20;
+    const float MAX_VELOCITY = 5f;
+    const float   WALK_SPEED = 3f;
 
-    Rigidbody2D Rb { get; set; }
-    Animator Anim { get; set; }
-    bool isWalking { get; set; }
-    bool isJumping { get; set; }
-    int jumpTimer = 0;
+    Rigidbody2D Rb { get; set; } 
+    Animator  Anim { get; set; }
+    bool IsWalking { get; set; }
+    bool IsJumping { get; set; }
+    int  jumpTimer { get; set; }
 
-    //Debugging
-    public float angle;
+    public bool IsAutonomous;   /// If true, the character is controlled by the players input.
+    
+    public Direction LookDirection { get; private set; }
+    public Direction MoveDirection { get; private set; }
+    public Planets         Planets { get; private set; }
 
-    public bool isAutonomous;
-    public Direction LookDirection { get; set; }
-    public Direction moveDirection { get; set; }
-
-    // Use this for initialization
     void Start()
     {
         Rb = GetComponent<Rigidbody2D>();
         Anim = GetComponent<Animator>();
         Anim.updateMode = AnimatorUpdateMode.AnimatePhysics;
-        planets = FindObjectOfType<Planets>();
+        Planets = FindObjectOfType<Planets>();
     }
 
-    void Update()
-    {
-        Quaternion rot = Quaternion.Euler(new Vector3(0, 0, GetAngle(transform.position - planets.FindClosestPlanet(transform.position).transform.position) - 90));
-        transform.rotation = rot;
-    }
-
-    // Update is called once per frame
     void FixedUpdate()
     {
-        if (isAutonomous)
+        // Rotates the character with the closest planet, depending on his position.
+        Quaternion rot = Quaternion.Euler(new Vector3(0, 0, GetAngle(transform.position - Planets.FindClosestPlanet(transform.position).transform.position) - 90));
+        transform.rotation = rot;
+        if (IsAutonomous)
         {
-            SetDirection();
+            FlipTowardsMouse();
 
             if (jumpTimer >= 0)
                 jumpTimer -= 1;
@@ -48,7 +43,7 @@ public class MoveCharacter : MonoBehaviour
             if (Rb.IsTouchingLayers())
             {
                 Rb.drag = INITIAL_DRAG;
-                isJumping = false;
+                IsJumping = false;
             }
             else
             {
@@ -57,12 +52,20 @@ public class MoveCharacter : MonoBehaviour
             }
             HandleInput();
         }
-        SetAnimationParameters();
+        else
+        {
+            if (Rb.velocity.magnitude < 0.1f)
+                IsWalking = false;
+        }
+
+        SetAnimatorParams();
     }
 
+    ///  @brief Handles the input.
+    ///  @return Void.
     void HandleInput()
     {
-        isWalking = false;
+        IsWalking = false;
         if (Input.GetKey(KeyCode.W))
             Jump();
 
@@ -73,7 +76,10 @@ public class MoveCharacter : MonoBehaviour
             Move(Direction.LEFT);
     }
 
-    void Flip(Direction dir)
+    ///  @brief Flips the character towards the wanted direction.
+    ///  @param dir The direction.
+    ///  @return Void.
+    public void Flip(Direction dir)
     {
         LookDirection = dir;
         Vector3 scale = transform.localScale;
@@ -81,57 +87,72 @@ public class MoveCharacter : MonoBehaviour
         transform.localScale = scale;
     }
 
+    ///  @brief Moves the character in the given direction.
+    ///  @param dir The direction.
+    ///  @return Void.
     public void Move(Direction dir)
     {
-        moveDirection = dir;
+        Move(dir, WALK_SPEED, MAX_VELOCITY);
+    }
 
-        if (Rb.velocity.magnitude < 5)
+    public void Move(Direction dir, float speed)
+    {
+        Move(dir, speed, MAX_VELOCITY);
+    }
+
+    public void Move(Direction dir, float speed, float maxVelocity)
+    {
+        MoveDirection = dir;
+
+        if (Rb.velocity.magnitude < maxVelocity)
         {
-            Rb.AddForce((int)dir * transform.right * Rb.drag * 3f);
-            isWalking = true;
+            Rb.AddForce((int)dir * transform.right * Rb.drag * speed);
+            IsWalking = true;
         }
     }
 
+    ///  @brief Makes the character jump by giving it a big force
+    ///         in the up direction. Also initialises a cooldown
+    ///         and modifies the drag. Makes the boolean isJumping
+    ///         true.
+    ///  @return Void.
     void Jump()
     {
-        if (!isJumping && jumpTimer <= 0)
+        if (!IsJumping && jumpTimer <= 0)
         {
-            isJumping = true;
+            IsJumping = true;
             Rb.AddForce(transform.up * 140);
             Rb.drag = FALLING_DRAG;
             jumpTimer = JUMP_COOLDOWN;
         }
     }
 
-    void SetDirection()
+    ///  @brief Flips the character towards the mouse.
+    ///  @return Void.
+    void FlipTowardsMouse()
     {
-        if (isAutonomous)
-        {
-            if (Input.mousePosition.x < Camera.main.WorldToScreenPoint(transform.position).x)
-                Flip(Direction.LEFT);
-            else
-                Flip(Direction.RIGHT);
-        }
+        if (Input.mousePosition.x < Camera.main.WorldToScreenPoint(transform.position).x)
+            Flip(Direction.LEFT);
+        else
+            Flip(Direction.RIGHT);
     }
 
-    void SetAnimationParameters()
+    ///  @brief Sets the animator parameters.
+    ///  @return Void.
+    void SetAnimatorParams()
     {
-        Anim.SetBool("IsWalking", isWalking);
+        Anim.SetBool("IsWalking", IsWalking);
 
         // If the direction the character is moving equals the direction it is looking, then the animation plays normally. Otherwise, it plays backwards.
-        //print(moveDirection.ToString());
-        Anim.SetFloat("SpeedMultiplier", moveDirection == LookDirection ? 1 : -1);
+        Anim.SetFloat("SpeedMultiplier", MoveDirection == LookDirection ? 1 : -1);
     }
 
-    //Gets the angle between the vector and the positive x axis
+    ///  @brief Returns the angle in degrees between the vector and 
+    ///         the x axis.
+    ///  @param v The vector.
+    ///  @return Void.
     float GetAngle(Vector3 v)
     {
         return Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
     }
-
-    float GetAngle(Vector3 v1, Vector3 v2)
-    {
-        return Mathf.Acos(Vector3.Dot(v1.normalized, v2.normalized));
-    }
-
 }

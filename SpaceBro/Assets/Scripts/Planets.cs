@@ -6,7 +6,7 @@ public sealed class Planets : MonoBehaviour {
     const float DEFAULT_PLANET_RADIUS = 30;
     const float DEFAULT_GRAVITY = 3.25f;
     const float GRAVITY_UNCERTAINTY = 1f;
-    const float MAX_SCALE = 1f;
+    const float MAX_SCALE = 0.25f; //1f;
     const float MIN_SCALE = 0.25f;
 
     public List<Sprite> PlanetPatterns;
