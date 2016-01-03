@@ -31,7 +31,6 @@ public class LookAtFocusPoint : MonoBehaviour
             dir = mc.LookDirection;
 
         Vector3 dif = new Vector3(0, 0, transform.parent.parent.rotation.eulerAngles.z - MainCharacter.Rotation.z);
-        Debug.Log(dif);
 
         // That's weird but I got bored and it works.
         transform.rotation = Quaternion.Lerp(transform.rotation,  Quaternion.Euler(-(int)dir * rot + Offset + transform.parent.parent.rotation.eulerAngles - (int)dir * dif), 0.1f);
