@@ -10,14 +10,14 @@ public class Character : MonoBehaviour {
     {
         get
         {
-            return isInShip ? MoveSpaceship.transform.position : MoveCharacter.transform.position;
+            return Health > 0 ? (isInShip ? MoveSpaceship.transform.position : MoveCharacter.transform.position) : Vector3.zero;
         }
     }
     public Vector3 Rotation
     {
         get
         {
-            return isInShip ? MoveSpaceship.transform.rotation.eulerAngles : MoveCharacter.transform.rotation.eulerAngles;
+            return Health > 0 ? (isInShip ? MoveSpaceship.transform.rotation.eulerAngles : MoveCharacter.transform.rotation.eulerAngles) : Vector3.zero;
         }
     }
     GameObject Spaceship;
@@ -26,10 +26,15 @@ public class Character : MonoBehaviour {
     MoveCharacter MoveCharacter;
     SpriteRenderer CaptnBroHead;
     Animator GlassAnim;
-
+    public AudioClip OpenSAS;
+    public AudioClip CloseSAS;
+    AudioSource AS;
+    AudioListener AL;
+    public float Health { get; set; }
+    public ParticleSystem DeathEffect;
     Follow Follow;
     bool isInShip = true;
-
+    bool dead = false;
 	// Use this for initialization
 	void Start () {
         Spaceship = GameObject.FindGameObjectWithTag("MainSpaceship");
@@ -38,12 +43,36 @@ public class Character : MonoBehaviour {
         Follow.go = Spaceship;
         CaptnBroHead = Spaceship.transform.FindChild("CaptnBroHead").GetComponent<SpriteRenderer>();
         GlassAnim = Spaceship.transform.FindChild("Glass").GetComponent<Animator>();
+        AS = GetComponent<AudioSource>();
+        AL = GetComponent<AudioListener>();
+        Health = 100;
     }
 
 	// Update is called once per frame
 	void Update () {
-        HandleInput();
+        if (Health <= 0)
+            Die();
+        else
+        {
+            HandleInput();
+
+            AL.transform.position = Position;
+        }
 	}
+
+    void Die()
+    {
+        if (!dead)
+        {
+            ParticleSystem deathEffect = Instantiate(DeathEffect);
+            deathEffect.transform.position = MoveCharacter.transform.position;
+            Destroy(deathEffect.GetComponent<ParticlesGravity>(), deathEffect.startLifetime);
+            Destroy(deathEffect.gameObject, deathEffect.startLifetime);
+            Destroy(Char);
+            dead = true;
+            Follow.go = gameObject;
+        }
+    }
 
     void HandleInput()
     {
@@ -51,7 +80,11 @@ public class Character : MonoBehaviour {
         {
             if (isInShip)
             {
-                Char = Instantiate(CharacterPrefab, Spaceship.transform.position , Spaceship.transform.rotation) as GameObject;
+                AS.transform.position = Spaceship.transform.position;
+                AS.pitch = 1;
+                AS.PlayOneShot(OpenSAS);
+
+                Char = Instantiate(CharacterPrefab, Spaceship.transform.position, Spaceship.transform.rotation) as GameObject;
                 MoveCharacter = Char.GetComponent<MoveCharacter>();
                 isInShip = false;
                 Follow.go = Char;
@@ -60,8 +93,12 @@ public class Character : MonoBehaviour {
                 GlassAnim.SetBool("Opened", true);
                 MoveSpaceship.enabled = false;
             }
-            else if((Char.transform.position - Spaceship.transform.position).magnitude < MIN_DIST)
+            else if ((Char.transform.position - Spaceship.transform.position).magnitude < MIN_DIST)
             {
+                AS.transform.position = Spaceship.transform.position;
+                AS.pitch = -1;
+                AS.PlayOneShot(OpenSAS);
+
                 Destroy(Char);
                 isInShip = true;
                 Follow.go = Spaceship;
@@ -81,6 +118,5 @@ public class Character : MonoBehaviour {
             else
                 Follow.size = Follow.CHARACTER_SIZE;
         }
-
     }
 }

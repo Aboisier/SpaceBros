@@ -6,6 +6,8 @@ public class CharacterAI : MonoBehaviour {
     const float FOCUS_POINT_PRECISION     = 1f;
     const float FOLLOW_MAIN_CHAR_DISTANCE = 2.5f;
 
+    public ParticleSystem DeathEffect;
+
     public Vector3 Position
     {
         get
@@ -65,6 +67,10 @@ public class CharacterAI : MonoBehaviour {
 
     void Die()
     {
+        ParticleSystem deathEffect = Instantiate(DeathEffect);
+        deathEffect.transform.position = MoveCharacter.transform.position;
+        Destroy(deathEffect.GetComponent<ParticlesGravity>(), deathEffect.startLifetime);
+        Destroy(deathEffect.gameObject, deathEffect.startLifetime);
         Destroy(gameObject);
     }
 

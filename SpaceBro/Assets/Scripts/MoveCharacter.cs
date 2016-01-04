@@ -13,7 +13,7 @@ public class MoveCharacter : MonoBehaviour
     bool IsWalking { get; set; }
     bool IsJumping { get; set; }
     int  jumpTimer { get; set; }
-
+    public float Health;
     public bool IsAutonomous;   /// If true, the character is controlled by the players input.
     
     public Direction LookDirection { get; private set; }
@@ -154,5 +154,10 @@ public class MoveCharacter : MonoBehaviour
     float GetAngle(Vector3 v)
     {
         return Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
+    }
+
+    public void Hit(float dmg)
+    {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().Health -= dmg;
     }
 }
